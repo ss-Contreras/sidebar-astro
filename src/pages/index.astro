@@ -1,144 +1,42 @@
----
+--- 
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.jsx';
+import Sidebar from '../components/Sidebar.jsx';
+import PlayersField from '../components/PlayersField.jsx';
+
 const jugadores = [
-  { nombre: 'C.VARGAS', numero: 1, posicion: 'portero', imagen: '/images/image1.jpg' },
-  { nombre: 'C.CUESTA', numero: 2, posicion: 'defensa', imagen: '/images/image2.jpg' },
-  { nombre: 'D.SÁNCHEZ', numero: 23, posicion: 'defensa', imagen: '\img/image.23.jpeg' },
-  { nombre: 'S.ARIAS', numero: 4, posicion: 'defensa', imagen: '/images/image4.jpg' },
-  { nombre: 'J.MOJICA', numero: 17, posicion: 'defensa', imagen: '/images/image5.jpg' },
-  { nombre: 'R.RIOS', numero: 6, posicion: 'medio-defensivo', imagen: '/images/image6.jpg' },
-  { nombre: 'J.LERMA', numero: 16, posicion: 'medio-defensivo', imagen: '/images/image7.jpg' },
-  { nombre: 'J.RODRÍGUEZ', numero: 10, posicion: 'medio-ofensivo', imagen: "\img/image.3.png" },
-  { nombre: 'J,ARIAS', numero: 11, posicion: 'medio-ofensivo', imagen: '/images/image9.jpg' },
-  { nombre: 'L.DÍAZ', numero: 7, posicion: 'medio-ofensivo', imagen: '/img/image.7.jpeg' },
-  { nombre: 'J.CÓRDOBA', numero: 24, posicion: 'delantero', imagen: '/images/image11.jpg' },
+  { nombre: 'C.VARGAS', numero: 1, posicion: 'portero', imagen: 'pepe.png' },
+  { nombre: 'C.CUESTA', numero: 2, posicion: 'defensa', imagen: 'pepe.png' },
+  { nombre: 'D.SÁNCHEZ', numero: 23, posicion: 'defensa', imagen: 'pepe.png' },
+  { nombre: 'S.ARIAS', numero: 4, posicion: 'defensa', imagen: 'pepe.png'},
+  { nombre: 'J.MOJICA', numero: 17, posicion: 'defensa', imagen: 'pepe.png' },
+  { nombre: 'R.RIOS', numero: 6, posicion: 'medio-defensivo', imagen: 'pepe.png' },
+  { nombre: 'J.LERMA', numero: 16, posicion: 'medio-defensivo', imagen: 'pepe.png' },
+  { nombre: 'J.RODRÍGUEZ', numero: 10, posicion: 'medio-ofensivo', imagen: 'pepe.png' },
+  { nombre: 'J,ARIAS', numero: 11, posicion: 'medio-ofensivo', imagen: 'pepe.png' },
+  { nombre: 'L.DÍAZ', numero: 7, posicion: 'medio-ofensivo', imagen: 'pepe.png' },
+  { nombre: 'J.CÓRDOBA', numero: 24, posicion: 'delantero', imagen: 'pepe.png' },
 ];
 ---
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: url(\img/image.png) no-repeat center center fixed;
-    background-size: cover;
-  }
-  .header {
-    text-align: center;
-    padding: 20px;
-    background: url(\img/image.1.png) no-repeat center center;
-    background-size: cover;
-    color: #FFD700; /* Amarillo similar al color de la multitud */
-    font-size: 24px;
-  }
-  .cancha {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/image.cancha.png') no-repeat center center;
-    background-size: cover;
-    width: 80%;
-    height: 600px;
-    margin: 20px auto;
-    position: relative;
-    border: 5px solid #004488; /* Azul oscuro para el contorno */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
-  .lineas-cancha {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url("\img/imagecancha.png") no-repeat center center;
-    background-size: contain;
-  }
-  .jugador {
-    position: absolute;
-    text-align: center;
-    cursor: pointer;
-    color: white;
-    text-shadow: 1px 1px 2px black; /* Sombra para mejorar la legibilidad */
-  }
-  .jugador img {
-    display: none;
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #FFD700; /* Borde amarillo */
-  }
-  .jugador:hover img {
-    display: block;
-  }
-  .player-selection {
-    background-color: #004488; /* Azul oscuro */
-    color: white;
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%;
-    text-align: center;
-    border-radius: 10px;
-  }
-  /* Posiciones de los jugadores */
-  .portero { top: 85%; left: 50%; transform: translateX(-50%); }
-  .defensa:nth-of-type(6) { top: 70%; left: 5%; }
-  .defensa:nth-of-type(3) { top: 70%; left: 30%; }
-  .defensa:nth-of-type(4) { top: 70%; left: 60%; }
-  .defensa:nth-of-type(5) { top: 70%; left: 85%; }
-  .medio-defensivo:nth-of-type(8) { top: 55%; left: 25%; }
-  .medio-defensivo:nth-of-type(7) { top: 55%; left: 60%; }
-  .medio-ofensivo:nth-of-type(11) { top: 40%; left: 10%; }
-  .medio-ofensivo:nth-of-type(9) { top: 40%; left: 50%; transform: translateX(-50%); }
-  .medio-ofensivo:nth-of-type(10) { top: 40%; left: 80%; }
-  .delantero { top: 25%; left: 50%; transform: translateX(-50%); }
-  .footer {
-    text-align: center;
-    padding: 10px;
-    background: url("\img/image.2.jpeg") no-repeat center center;
-    background-size: cover;
-    color: white;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 150px; /* Ajusta la altura según sea necesario */
-
-    
-
-  }
-  .contenedor {
-  width: 66%; /* Cambiado a 66% para ocupar dos tercios de la pantalla */
-  margin: 0 auto; /* Centrar horizontalmente */
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente para destacar */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para efecto de profundidad */
-  text-align: center; /* Centrar el texto */
-}
-
-</style>
-<div class="header">
-  LA SELECCIÓN
-</div>
-<div class="contenedor">
-
-
-  <div class="player-selection">
-    Selecciona un jugador
-  </div>
-
-  <div class="cancha">
-    <div class="lineas-cancha"></div>
-    {jugadores.map((jugador, index) => (
-      <div class={`jugador ${jugador.posicion}`}>
-        <span>{jugador.nombre} ({jugador.numero})</span>
-        <img src={jugador.imagen} alt={jugador.nombre} />
+<Layout title='La selección'>
+  <Sidebar /> <!-- Sidebar Fijo -->
+  <div class="ml-64 flex flex-col min-h-screen"> <!-- Espacio para el Sidebar -->
+    <Header client:only="react" />
+    <header class="text-center py-6 bg-[url('/img/image1.png')] bg-cover bg-center text-yellow-400 text-2xl">
+      LA SELECCIÓN
+    </header>
+    <main class="container mx-auto px-4 py-8 flex-grow">
+      <div class="bg-blue-800 text-white p-6 rounded-lg shadow-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Selecciona un jugador</h2>
+        <!-- Puedes agregar contenido interactivo aquí -->
       </div>
-    ))}
+
+      <PlayersField jugadores={jugadores} /> <!-- Componente de la Cancha y Jugadores -->
+    </main>
   </div>
-
-  
-</div>
-<div class="footer">
-  <img src="/img/image.2.jpeg" alt="Footer Image">
+</Layout>
+<!-- <footer class="fixed bottom-0 left-0 w-full h-36 bg-[url('/img/image2.jpeg')] bg-cover bg-center text-white flex items-center justify-center">
   © 2024 Tu Sitio de Fútbol
-</div>
-
+  </footer> -->
 
